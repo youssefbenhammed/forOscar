@@ -71,14 +71,19 @@ class Game:
 
 
     def get_train_position(self):
+        l=[]
+        for u in self.units:
+            if(u.owner==ME):
+                l.append(u)
         hq=self.get_my_HQ()
-        if self.units.len()!=0:
-            minU=self.units[0].distHQ
-            posU=self.units[0].pos
-            for u in self.units:
+        if len(l)!=0:
+            minU=1000
+            posU=l[0].pos
+            for u in l:
                 if minU>u.distHQ:
-                    minU=u.distHQ
-                    posU=u.pos
+                    if u.owner==ME:
+                        minU=u.distHQ
+                        posU=u.pos
             return posU
         else:
             hq = self.get_my_HQ()
@@ -123,8 +128,7 @@ class Game:
         unit_count = int(input())
         for i in range(unit_count):
             owner, unit_id, level, x, y = [int(j) for j in input().split()]
-            self.units.append(Unit(owner, unit_id, level, x, y,self.get_opponent_HQ))
-            
+            self.units.append(Unit(owner, unit_id, level, x, y,self.get_opponent_HQ()))
 
 
     def build_output(self):
@@ -138,7 +142,7 @@ class Game:
             print(';'.join(self.actions))
         else:
             print('WAIT')
-            
+
 
 g = Game()
 
