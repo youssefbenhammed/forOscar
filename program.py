@@ -84,7 +84,10 @@ class Game:
                     if u.owner==ME:
                         minU=u.distHQ
                         posU=u.pos
-            return posU
+            if posU.x!=0:
+                return Position(posU.x-1,posU.y)
+            else:
+                return Position(posU.x+1,posU.y)
         else:
             hq = self.get_my_HQ()
             if hq.pos.x == 0:
@@ -94,9 +97,7 @@ class Game:
 
     def train_units(self):
         train_pos = self.get_train_position()
-
-        if self.gold > 30:
-            self.actions.append(f'TRAIN 1 {train_pos.x} {train_pos.y}')
+        self.actions.append(f'TRAIN 1 {train_pos.x} {train_pos.y}')
 
 
     def init(self):
